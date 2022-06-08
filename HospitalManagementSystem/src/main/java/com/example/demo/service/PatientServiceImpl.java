@@ -27,17 +27,6 @@ public class PatientServiceImpl implements PatientService {
 		return patientRepository.findAll();
 	}
 
-	
-
-	@Override
-	public Patient updatePatient(long id, Patient patient) {
-		// TODO Auto-generated method stub
-		
-		Patient paitent1=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
-		return null;
-		
-		
-	}
 
 	@Override
 	public Patient getPatientById(long id) {
@@ -54,6 +43,18 @@ Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotF
 		Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
 		patientRepository.deleteById(id);
 		return "Patient record deleted successfully..";
+	}
+
+	@Override
+	public Patient updatePatient(long id, Patient patient) {
+		// TODO Auto-generated method stub
+		
+		Patient patient1=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
+         patient1.setFirstName(patient.getFirstName());
+         patient1.setLastName(patient.getLastName());
+        
+         patientRepository.save(patient1);
+		return patient1;
 	}
 
 

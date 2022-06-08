@@ -55,6 +55,8 @@ public class DoctorServiceImpl implements DoctorService{
 		dr.setContactNo(doctor.getContactNo());
 		dr.setQualification(doctor.getQualification());
 		dr.setGender(doctor.getGender());
+		dr.setUserName(doctor.getUserName());
+		dr.setPassword(doctor.getPassword());
 		
 		doctorRepository.save(dr);
 		return dr;
