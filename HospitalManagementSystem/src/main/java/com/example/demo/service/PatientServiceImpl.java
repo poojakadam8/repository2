@@ -51,7 +51,15 @@ Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotF
 		
 		Patient patient1=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
          patient1.setFirstName(patient.getFirstName());
+         patient1.setMiddleName(patient.getMiddleName());
          patient1.setLastName(patient.getLastName());
+         patient1.setAge(patient.getAge());
+         patient1.setGender(patient.getGender());
+         patient1.setAddress(patient.getAddress());
+         patient1.setContactno(patient.getContactno());
+         patient1.setDate(patient.getDate());
+         patient1.setUserName(patient.getUserName());
+         patient1.setPassword(patient.getPassword());
         
          patientRepository.save(patient1);
 		return patient1;
