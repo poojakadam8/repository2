@@ -1,5 +1,7 @@
 package com.example.demo.Repository;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,13 @@ public class DoctorRepositoryTest {
 		
 		Doctor doctor=doctorRepository.findById(2L).get();
 		Assertions.assertThat(doctor.getId()).isEqualTo(2L);
+	}
+	
+	@Test
+	public void getDoctorListTest() {
+		
+		List<Doctor> doctor=doctorRepository.findAll();
+		Assertions.assertThat(doctor.size()).isGreaterThan(0);
+		
 	}
 }
