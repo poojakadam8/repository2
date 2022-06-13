@@ -20,7 +20,7 @@ public class Doctor implements Serializable
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private long id;
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String doctorId;
 	private String firstName;
@@ -43,11 +43,11 @@ public class Doctor implements Serializable
 	@JsonIgnoreProperties("doctor")
 	private List<Appointment> appointment;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -163,7 +163,7 @@ public class Doctor implements Serializable
 		this.appointment = appointment;
 	}
 
-	public Doctor(int id, String doctorId, String firstName, String lastName, String address, long contactNo,
+	public Doctor(long id, String doctorId, String firstName, String lastName, String address, long contactNo,
 			String gender, String age, String qualification, String yearOfExperience, long salary, String userName,
 			String password, List<Patient> patient, List<Appointment> appointment) {
 		super();
@@ -187,6 +187,35 @@ public class Doctor implements Serializable
 	public Doctor() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	
+	
+	public Doctor(long id, String doctorId, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.doctorId = doctorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public Doctor(long id, String doctorId, String firstName, String lastName, String address, long contactNo,
+			String gender, String age, String qualification, String yearOfExperience, long salary, String userName,
+			String password) {
+		super();
+		this.id = id;
+		this.doctorId = doctorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.contactNo = contactNo;
+		this.gender = gender;
+		this.age = age;
+		this.qualification = qualification;
+		this.yearOfExperience = yearOfExperience;
+		this.salary = salary;
+		this.userName = userName;
+		this.password = password;
 	}
 
 	@Override
