@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.demo.entity.Doctor;
 import com.example.demo.entity.Patient;
 import com.example.demo.service.PatientService;
 
@@ -25,7 +27,7 @@ public class PatientController {
 	@Autowired
 	PatientService patientService;
 	@PostMapping
-	public ResponseEntity<Patient> savePatient(@RequestBody Patient patient)
+	public ResponseEntity<Patient> savePatient(@Valid @RequestBody Patient patient)
 	{
 		return new ResponseEntity<Patient>(patientService.savePatient(patient),HttpStatus.CREATED);
 	}
@@ -35,21 +37,39 @@ public class PatientController {
 		return patientService.getPatientList();
 	}
 	
-	@GetMapping("/{id}")
-	public Patient getPatientById(@PathVariable("id")long id) {
-		return patientService.getPatientById(id);
+	@GetMapping("/{patientId}")
+	public Patient getPatientById(@PathVariable("patientIdd")long patientId) {
+		return patientService.getPatientById(patientId);
 		
 	}
 	
-	@PutMapping("/{id}")
-	public Patient updatePatient(@PathVariable("id") long id, @RequestBody Patient patient) {
+	@PutMapping("/{patientId}")
+	public Patient updatePatient(@Valid @PathVariable("patientId") long patientId, @RequestBody Patient patient) {
 	
-		return patientService.updatePatient(id,patient);
+		return patientService.updatePatient(patientId,patient);
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deletePatient(@PathVariable("id") long id) {
-		return patientService.deletePatient(id);
+	@DeleteMapping("/{patientId}")
+	public String deletePatient(@PathVariable("patientId") long patientId) {
+		return patientService.deletePatient(patientId);
 		
 	}
+	
+	@GetMapping("/byfname/{firstName}")
+	public Patient getPatientByFirstName(@PathVariable("firstName") String firstName){
+		return patientService.getPatientByFirstName(firstName);
+		
+	}
+	
+	@GetMapping("/bylname/{lastName}")
+	public Patient getPatientByLastName(@PathVariable("lastName") String lastName){
+		return patientService.getPatientByLastName(lastName);
+		
+	}
+	@GetMapping("/bygender/{gender}")
+	public Patient getPatientByGender(@PathVariable("gender") String gender){
+		return patientService.getPatientByGender(gender);
+		
+	}
+	
 }

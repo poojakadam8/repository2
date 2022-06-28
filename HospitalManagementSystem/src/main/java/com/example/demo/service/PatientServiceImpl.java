@@ -1,11 +1,15 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Patient;
+import com.example.demo.exception.GivenIdNotFoundException;
+import com.example.demo.exception.NoRecordFoundException;
+import com.example.demo.exception.NoSuchDataFoundException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.PatientRepository;
 
@@ -24,32 +28,36 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public List<Patient> getPatientList() {
 		// TODO Auto-generated method stub
-		return patientRepository.findAll();
+		List<Patient> patient= patientRepository.findAll();
+		if(patient.isEmpty())
+			throw new NoRecordFoundException();
+		else
+			return patient;
 	}
 
 
 	@Override
-	public Patient getPatientById(long id) {
+	public Patient getPatientById(long patientId) {
 		// TODO Auto-generated method stub
-Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
+Patient patient=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
 		
 		return patient;
 		
 	}
 
 	@Override
-	public String deletePatient(long id) {
+	public String deletePatient(long patientId) {
 		// TODO Auto-generated method stub
-		Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
-		patientRepository.deleteById(id);
+		Patient patient=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
+		patientRepository.deleteById(patientId);
 		return "Patient record deleted successfully..";
 	}
 
 	@Override
-	public Patient updatePatient(long id, Patient patient) {
+	public Patient updatePatient(long patientId, Patient patient) {
 		// TODO Auto-generated method stub
 		
-		Patient patient1=patientRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Patient","id",id));
+		Patient patient1=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
          patient1.setFirstName(patient.getFirstName());
          patient1.setMiddleName(patient.getMiddleName());
          patient1.setLastName(patient.getLastName());
@@ -63,6 +71,49 @@ Patient patient=patientRepository.findById(id).orElseThrow(()-> new ResourceNotF
         
          patientRepository.save(patient1);
 		return patient1;
+	}
+
+	@Override
+	public Patient getPatientByFirstName(String firstName) {
+		// TODO Auto-generated method stub
+		Optional<Patient> patient=patientRepository.findByFirstName(firstName);
+		if(patient.isPresent())
+		{
+			return patient.get();
+			
+		}
+		else {
+			throw new NoSuchDataFoundException();
+		}
+	}
+
+	@Override
+	public Patient getPatientByLastName(String lastName) {
+		// TODO Auto-generated method stub
+		Optional<Patient> patient=patientRepository.findByLastName(lastName);
+		if(patient.isPresent())
+		{
+			return patient.get();
+			
+		}
+		else {
+			throw new NoSuchDataFoundException();
+		}
+	}
+
+	@Override
+	public Patient getPatientByGender(String gender) {
+		// TODO Auto-generated method stub
+		
+		Optional<Patient> patient=patientRepository.findByGender(gender);
+		if(patient.isPresent())
+		{
+			return patient.get();
+			
+		}
+		else {
+			throw new NoSuchDataFoundException();
+		}
 	}
 
 

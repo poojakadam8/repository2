@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +27,7 @@ public class DoctorController {
 	@Autowired
 	DoctorService doctorService;
 	@PostMapping
-	public ResponseEntity<Doctor> saveDoctor(@RequestBody Doctor doctor)
+	public ResponseEntity<Doctor> saveDoctor( @Valid @RequestBody Doctor doctor)
 	{
 		return new ResponseEntity<Doctor>(doctorService.saveDoctor(doctor),HttpStatus.CREATED);
 	}
@@ -34,21 +37,43 @@ public class DoctorController {
 		return doctorService.getDoctorList();
 	}
 	
-	@GetMapping("/{id}")
-	public Doctor getDoctorById(@PathVariable("id")long id) {
-		return doctorService.getDoctorById(id);
+	@GetMapping("/{doctorId}")
+	public Doctor getDoctorById(@PathVariable("doctorId")long doctorId) {
+		return doctorService.getDoctorById(doctorId);
 		
 	}
 
 	
-	@PutMapping("/{id}")
-	public Doctor updateDoctor(@PathVariable("id")long id, @RequestBody Doctor doctor) {
-		return doctorService.updateDoctor(id, doctor);
+	@PutMapping("/{doctorId}")
+	public Doctor updateDoctor(@Valid @PathVariable("doctorId")long doctorId, @RequestBody Doctor doctor) {
+		return doctorService.updateDoctor(doctorId, doctor);
 		
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deleteDoctor(@PathVariable("id")long id) {
-		return doctorService.deleteDoctor(id);
+	@DeleteMapping("/{doctorId}")
+	public String deleteDoctor(@PathVariable("doctorId")long doctorId) {
+		return doctorService.deleteDoctor(doctorId);
+	}
+	
+	@GetMapping("/byfname/{firstName}")
+	public Doctor getDoctorByFirstName(@PathVariable("firstName") String firstName){
+		return doctorService.getDoctorByFirstName(firstName);
+		
+	}
+	
+	@GetMapping("/bylname/{lastName}")
+	public List<Doctor> getDoctorByLastName(@PathVariable("lastName") String lastName){
+		return doctorService.getDoctorByLastName(lastName);
+		
+	}
+	@GetMapping("/byqualification/{qualification}")
+	public List<Doctor> getDoctorByQualification(@PathVariable("qualification") String qualification){
+		return doctorService.getDoctorByQualification(qualification);
+		
+	}
+	@GetMapping("/bygender/{gender}")
+	public List<Doctor> getDoctorByGender(@PathVariable("gender") String gender){
+		return doctorService.getDoctorByGender(gender);
+		
 	}
 }

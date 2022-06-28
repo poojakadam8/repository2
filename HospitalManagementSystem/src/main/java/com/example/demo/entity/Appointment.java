@@ -5,13 +5,17 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,17 +26,22 @@ public class Appointment implements Serializable
 {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=101)
 	private long id;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
 	private String appointmentNo;
-	private String patientName;
-	private String gender;
-	private long age;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
 	private String disease;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
 	private Date date;
 	
 	@OneToOne(mappedBy="appointment",cascade=CascadeType.PERSIST)
-	@JsonIgnoreProperties("appointment")
+	@JoinColumn(name="patientId")
+	@JsonIgnoreProperties({"appointment","userName","password"})
 	private Patient patient;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -55,29 +64,8 @@ public class Appointment implements Serializable
 		this.appointmentNo = appointmentNo;
 	}
 
-	public String getPatientName() {
-		return patientName;
-	}
-
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public long getAge() {
-		return age;
-	}
-
-	public void setAge(long age) {
-		this.age = age;
-	}
+	
+	
 
 	public String getDisease() {
 		return disease;
@@ -112,16 +100,20 @@ public class Appointment implements Serializable
 		this.doctor = doctor;
 	}
 
-	
 
-	public Appointment(long id, String appointmentNo, String patientName, String gender, long age, String disease,
-			Date date, Patient patient, Doctor doctor) {
+
+	public Appointment(long id, @NotNull(message = "this field is manditory") String appointmentNo,
+			@NotNull(message = "this field is manditory") String disease) {
 		super();
 		this.id = id;
 		this.appointmentNo = appointmentNo;
-		this.patientName = patientName;
-		this.gender = gender;
-		this.age = age;
+		this.disease = disease;
+	}
+
+	public Appointment(long id, String appointmentNo, String disease, Date date, Patient patient, Doctor doctor) {
+		super();
+		this.id = id;
+		this.appointmentNo = appointmentNo;
 		this.disease = disease;
 		this.date = date;
 		this.patient = patient;
@@ -135,9 +127,8 @@ public class Appointment implements Serializable
 
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", appointmentNo=" + appointmentNo + ", patientName=" + patientName
-				+ ", gender=" + gender + ", age=" + age + ", disease=" + disease + ", date=" + date + ", patient="
-				+ patient + ", doctor=" + doctor + "]";
+		return "Appointment [id=" + id + ", appointmentNo=" + appointmentNo + ", disease=" + disease + ", date=" + date
+				+ ", patient=" + patient + ", doctor=" + doctor + "]";
 	}
 
 	

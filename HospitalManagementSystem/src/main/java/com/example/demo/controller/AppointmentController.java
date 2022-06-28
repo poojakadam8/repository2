@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class AppointmentController {
 	AppointmentService appointmentService;
 	
 	@PostMapping
-	public ResponseEntity<Appointment> saveAppointment(@RequestBody Appointment appointment){
+	public ResponseEntity<Appointment> saveAppointment(@Valid @RequestBody Appointment appointment){
 		return new ResponseEntity<Appointment>(appointmentService.saveAppointment(appointment),HttpStatus.CREATED);
 		
 	}
@@ -35,9 +37,14 @@ public class AppointmentController {
 		return appointmentService.getAppointmentList();
 		
 	}
+	@GetMapping("/{id}")
+	public Appointment getAppointmentById(@PathVariable("id") long id) {
+		return appointmentService.getAppointmentById(id);
+		
+	}
 	
 	@PutMapping("/{id}")
-	public Appointment updateAppointment(@PathVariable("id")long id,@RequestBody Appointment appointment) {
+	public Appointment updateAppointment(@Valid @PathVariable("id")long id,@RequestBody Appointment appointment) {
 		return appointmentService.updateAppointment(id,appointment);
 		
 	}

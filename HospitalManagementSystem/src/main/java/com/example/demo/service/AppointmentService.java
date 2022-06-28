@@ -16,6 +16,10 @@ public interface AppointmentService {
 
 	String deleteAppointment(long id);
 
+	Appointment getAppointmentById(long id);
+
+	
+
 
 
 }

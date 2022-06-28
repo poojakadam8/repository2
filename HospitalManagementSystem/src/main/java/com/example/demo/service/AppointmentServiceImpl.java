@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.exception.GivenIdNotFoundException;
+import com.example.demo.exception.NoRecordFoundException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.AppointmentRepository;
 
@@ -24,15 +27,22 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<Appointment> getAppointmentList() {
 		// TODO Auto-generated method stub
-		return appointmentRepository.findAll();
+		List <Appointment> appointment= appointmentRepository.findAll();
+		if(appointment.isEmpty())
+			throw new NoRecordFoundException();
+		else
+		return appointment;
 	}
 
 	@Override
 	public Appointment updateAppointment(long id, Appointment appointment) {
 		// TODO Auto-generated method stub
 		
-	 Appointment app=appointmentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Appointment","id",id));
+	 Appointment app=appointmentRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 	 
+	 app.setAppointmentNo(appointment.getAppointmentNo());
+	 app.setDate(appointment.getDate());
+	 app.setDisease(appointment.getDisease());
 	 appointmentRepository.save(app);
 		return app;
 	}
@@ -41,11 +51,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public String deleteAppointment(long id) {
 		// TODO Auto-generated method stub
 		
-		Appointment appointment=appointmentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Appointment","id",id));
+		Appointment appointment=appointmentRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 		
 		appointmentRepository.deleteById(id);
 		return "Appointment Record Deleted Successfully";
 	}
+
+	@Override
+	public Appointment getAppointmentById(long id) {
+		// TODO Auto-generated method stub
+		
+		Optional<Appointment> app = appointmentRepository.findById(id);
+		if(app.isPresent())
+		return app.get();
+		else
+			throw new GivenIdNotFoundException();
+	}
+
+	
+	
 	
 	
 }

@@ -4,11 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -19,20 +25,40 @@ public class Doctor implements Serializable
  {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String doctorId;
+	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue=101)
+	private long doctorId;
+	
+	@Column(nullable=false)
+	@NotNull
+	@NotBlank(message ="first name is manditory")
 	private String firstName;
+	@Column(nullable=false)
+	@NotBlank(message="last name is manditory")
 	private String lastName;
+	@Column(nullable=false)
+	@NotBlank(message="enter address")
 	private String address;
+	@Column(nullable=false)
+	@NotBlank(message="enter contact no")
 	private long  contactNo;
+	@Column(nullable=false)
+	@NotBlank(message="this field is manditory")
 	private String gender;
+	@Column(nullable=false)
+	@NotBlank(message="age is manditory")
 	private String age;
+	@Column(nullable=false)
+	@NotBlank(message="qualification manditory")
 	private String qualification;
+	@Column(nullable=false)
+	@NotBlank(message="this field is manditory")
 	private String yearOfExperience;
-	private long salary;
+	@Column(nullable=false)
+	@NotBlank(message= "please enter username")
 	private String userName;
+	@Column(nullable=false)
+	@NotBlank(message="please enter password")
 	private String password;
 	
 	@OneToMany(mappedBy="doctor", cascade=CascadeType.PERSIST)
@@ -43,19 +69,11 @@ public class Doctor implements Serializable
 	@JsonIgnoreProperties("doctor")
 	private List<Appointment> appointment;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getDoctorId() {
+	public long getDoctorId() {
 		return doctorId;
 	}
 
-	public void setDoctorId(String doctorId) {
+	public void setDoctorId(long doctorId) {
 		this.doctorId = doctorId;
 	}
 
@@ -123,14 +141,7 @@ public class Doctor implements Serializable
 		this.yearOfExperience = yearOfExperience;
 	}
 
-	public long getSalary() {
-		return salary;
-	}
-
-	public void setSalary(long salary) {
-		this.salary = salary;
-	}
-
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -163,11 +174,10 @@ public class Doctor implements Serializable
 		this.appointment = appointment;
 	}
 
-	public Doctor(long id, String doctorId, String firstName, String lastName, String address, long contactNo,
-			String gender, String age, String qualification, String yearOfExperience, long salary, String userName,
-			String password, List<Patient> patient, List<Appointment> appointment) {
+	public Doctor(long doctorId, String firstName, String lastName, String address, long contactNo, String gender,
+			String age, String qualification, String yearOfExperience,  String userName, String password,
+			List<Patient> patient, List<Appointment> appointment) {
 		super();
-		this.id = id;
 		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -177,7 +187,6 @@ public class Doctor implements Serializable
 		this.age = age;
 		this.qualification = qualification;
 		this.yearOfExperience = yearOfExperience;
-		this.salary = salary;
 		this.userName = userName;
 		this.password = password;
 		this.patient = patient;
@@ -189,43 +198,24 @@ public class Doctor implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-	public Doctor(long id, String doctorId, String firstName, String lastName) {
-		super();
-		this.id = id;
-		this.doctorId = doctorId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
 
-	public Doctor(long id, String doctorId, String firstName, String lastName, String address, long contactNo,
-			String gender, String age, String qualification, String yearOfExperience, long salary, String userName,
-			String password) {
+	public Doctor(long doctorId, @NotBlank(message = "first name is manditory") String firstName,
+			@NotBlank(message = "last name is manditory") String lastName) {
 		super();
-		this.id = id;
 		this.doctorId = doctorId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.address = address;
-		this.contactNo = contactNo;
-		this.gender = gender;
-		this.age = age;
-		this.qualification = qualification;
-		this.yearOfExperience = yearOfExperience;
-		this.salary = salary;
-		this.userName = userName;
-		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", address=" + address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age
-				+ ", qualification=" + qualification + ", yearOfExperience=" + yearOfExperience + ", salary=" + salary
-				+ ", userName=" + userName + ", password=" + password + ", patient=" + patient + ", appointment="
-				+ appointment + "]";
+		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + ", address="
+				+ address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", qualification="
+				+ qualification + ", yearOfExperience=" + yearOfExperience + ",  userName="
+				+ userName + ", password=" + password + ", patient=" + patient + ", appointment=" + appointment + "]";
 	}
+
+	
 	
 	
 	

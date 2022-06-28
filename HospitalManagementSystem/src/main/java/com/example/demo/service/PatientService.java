@@ -10,11 +10,17 @@ public interface PatientService {
 
 	List<Patient> getPatientList();
 
-	Patient updatePatient(long id, Patient patient);
+	Patient updatePatient(long patientId, Patient patient);
 
-	Patient getPatientById(long id);
+	Patient getPatientById(long patientId);
 
-	String deletePatient(long id);
+	String deletePatient(long patientId);
+
+	Patient getPatientByFirstName(String firstName);
+
+	Patient getPatientByLastName(String lastName);
+
+	Patient getPatientByGender(String gender);
 
 
 
