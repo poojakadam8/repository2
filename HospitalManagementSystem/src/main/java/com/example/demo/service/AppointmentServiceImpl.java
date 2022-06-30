@@ -40,9 +40,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 		
 	 Appointment app=appointmentRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 	 
-	 app.setAppointmentNo(appointment.getAppointmentNo());
+	 app.setFirstName(appointment.getFirstName());
+	 app.setLastName(appointment.getLastName());
+	 app.setDeceased(appointment.getDeceased());
+	 app.setDoctorName(appointment.getDoctorName());
+	 app.setTime(appointment.getTime());
 	 app.setDate(appointment.getDate());
-	 app.setDisease(appointment.getDisease());
+	
 	 appointmentRepository.save(app);
 		return app;
 	}

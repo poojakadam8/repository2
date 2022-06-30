@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,13 +32,22 @@ public class Appointment implements Serializable
 	private long id;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
-	private String appointmentNo;
+	private String firstName;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
-	private String disease;
+	private String lastName;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
+	private String doctorName;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
+	private String deceased;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
 	private Date date;
+	@Column(nullable=false)
+	@NotNull(message="this field is manditory")
+	private Time time;
 	
 	@OneToOne(mappedBy="appointment",cascade=CascadeType.PERSIST)
 	@JoinColumn(name="patientId")
@@ -56,23 +66,36 @@ public class Appointment implements Serializable
 		this.id = id;
 	}
 
-	public String getAppointmentNo() {
-		return appointmentNo;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setAppointmentNo(String appointmentNo) {
-		this.appointmentNo = appointmentNo;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	
-	
-
-	public String getDisease() {
-		return disease;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setDisease(String disease) {
-		this.disease = disease;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+	public String getDeceased() {
+		return deceased;
+	}
+
+	public void setDeceased(String deceased) {
+		this.deceased = deceased;
 	}
 
 	public Date getDate() {
@@ -83,7 +106,14 @@ public class Appointment implements Serializable
 		this.date = date;
 	}
 
-	
+	public Time getTime() {
+		return time;
+	}
+
+	public void setTime(Time time) {
+		this.time = time;
+	}
+
 	public Patient getPatient() {
 		return patient;
 	}
@@ -100,22 +130,20 @@ public class Appointment implements Serializable
 		this.doctor = doctor;
 	}
 
-
-
-	public Appointment(long id, @NotNull(message = "this field is manditory") String appointmentNo,
-			@NotNull(message = "this field is manditory") String disease) {
+	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,
+			@NotNull(message = "this field is manditory") String lastName,
+			@NotNull(message = "this field is manditory") String doctorName,
+			@NotNull(message = "this field is manditory") String deceased,
+			@NotNull(message = "this field is manditory") Date date,
+			@NotNull(message = "this field is manditory") Time time, Patient patient, Doctor doctor) {
 		super();
 		this.id = id;
-		this.appointmentNo = appointmentNo;
-		this.disease = disease;
-	}
-
-	public Appointment(long id, String appointmentNo, String disease, Date date, Patient patient, Doctor doctor) {
-		super();
-		this.id = id;
-		this.appointmentNo = appointmentNo;
-		this.disease = disease;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.doctorName = doctorName;
+		this.deceased = deceased;
 		this.date = date;
+		this.time = time;
 		this.patient = patient;
 		this.doctor = doctor;
 	}
@@ -127,11 +155,22 @@ public class Appointment implements Serializable
 
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", appointmentNo=" + appointmentNo + ", disease=" + disease + ", date=" + date
-				+ ", patient=" + patient + ", doctor=" + doctor + "]";
+		return "Appointment [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", doctorName="
+				+ doctorName + ", deceased=" + deceased + ", date=" + date + ", time=" + time + ", patient=" + patient
+				+ ", doctor=" + doctor + "]";
 	}
 
-	
+	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,
+			@NotNull(message = "this field is manditory") String lastName,
+			@NotNull(message = "this field is manditory") String deceased) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.deceased = deceased;
+	}
+
+
 	
 	
 	
