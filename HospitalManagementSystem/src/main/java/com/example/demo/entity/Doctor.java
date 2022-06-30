@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -38,31 +38,29 @@ public class Doctor implements Serializable
 	@NotBlank(message="last name is manditory")
 	private String lastName;
 	@Column(nullable=false)
-	@NotBlank(message="enter address")
+	@NotBlank(message="last name is manditory")
 	private String address;
 	@Column(nullable=false)
-	@NotBlank(message="enter contact no")
 	private long  contactNo;
 	@Column(nullable=false)
-	@NotBlank(message="this field is manditory")
+	@NotBlank(message="last name is manditory")
 	private String gender;
 	@Column(nullable=false)
-	@NotBlank(message="age is manditory")
+	@NotBlank(message="last name is manditory")
 	private String age;
 	@Column(nullable=false)
-	@NotBlank(message="qualification manditory")
-	private String qualification;
-	@Column(nullable=false)
-	@NotBlank(message="this field is manditory")
-	private String yearOfExperience;
-	@Column(nullable=false)
-	@NotBlank(message="this field is manditory")
 	private Date joiningDate;
 	@Column(nullable=false)
-	@NotBlank(message= "please enter username")
+	@NotBlank(message="last name is manditory")
+	private String qualification;
+	@Column(nullable=false)
+	@NotBlank(message="last name is manditory")
+	private String yearOfExperience;
+	@Column(nullable=false)
+	@NotBlank(message="last name is manditory")
 	private String userName;
 	@Column(nullable=false)
-	@NotBlank(message="please enter password")
+	@NotBlank(message="last name is manditory")
 	private String password;
 	
 	@OneToMany(mappedBy="doctor", cascade=CascadeType.PERSIST)
@@ -145,6 +143,8 @@ public class Doctor implements Serializable
 		this.yearOfExperience = yearOfExperience;
 	}
 
+
+
 	public Date getJoiningDate() {
 		return joiningDate;
 	}
@@ -185,16 +185,17 @@ public class Doctor implements Serializable
 		this.appointment = appointment;
 	}
 
+
+	public Doctor() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,
-			@NotBlank(message = "last name is manditory") String lastName,
-			@NotBlank(message = "enter address") String address, @NotBlank(message = "enter contact no") long contactNo,
-			@NotBlank(message = "this field is manditory") String gender,
-			@NotBlank(message = "age is manditory") String age,
-			@NotBlank(message = "qualification manditory") String qualification,
-			@NotBlank(message = "this field is manditory") String yearOfExperience,
-			@NotBlank(message = "this field is manditory") Date joiningDate,
-			@NotBlank(message = "please enter username") String userName,
-			@NotBlank(message = "please enter password") String password, List<Patient> patient,
+			String lastName, String address, long contactNo, String gender, String age, Date joiningDate,
+			String qualification, String yearOfExperience, String userName, String password, List<Patient> patient,
 			List<Appointment> appointment) {
 		super();
 		this.doctorId = doctorId;
@@ -204,27 +205,21 @@ public class Doctor implements Serializable
 		this.contactNo = contactNo;
 		this.gender = gender;
 		this.age = age;
+		this.joiningDate = joiningDate;
 		this.qualification = qualification;
 		this.yearOfExperience = yearOfExperience;
-		this.joiningDate = joiningDate;
 		this.userName = userName;
 		this.password = password;
 		this.patient = patient;
 		this.appointment = appointment;
 	}
 
-	public Doctor() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String toString() {
 		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + ", address="
 				+ address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", qualification="
-				+ qualification + ", yearOfExperience=" + yearOfExperience + ", joiningDate=" + joiningDate
-				+ ", userName=" + userName + ", password=" + password + ", patient=" + patient + ", appointment="
-				+ appointment + "]";
+				+ qualification + ", yearOfExperience=" + yearOfExperience + ", userName=" + userName + ", password="
+				+ password + ", patient=" + patient + ", appointment=" + appointment + "]";
 	}
 
 	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,

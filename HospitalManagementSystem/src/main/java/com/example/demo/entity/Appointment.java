@@ -31,6 +31,8 @@ public class Appointment implements Serializable
 	@SequenceGenerator(name= "seq", initialValue=101)
 	private long id;
 	@Column(nullable=false)
+	private long appointmentId;
+	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
 	private String firstName;
 	@Column(nullable=false)
@@ -43,10 +45,8 @@ public class Appointment implements Serializable
 	@NotNull(message="this field is manditory")
 	private String deceased;
 	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
 	private Date date;
 	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
 	private Time time;
 	
 	@OneToOne(mappedBy="appointment",cascade=CascadeType.PERSIST)
@@ -60,10 +60,6 @@ public class Appointment implements Serializable
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -129,15 +125,29 @@ public class Appointment implements Serializable
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+	
 
-	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,
+	public long getAppointmentId() {
+		return appointmentId;
+	}
+
+	public void setAppointmentId(long appointmentId) {
+		this.appointmentId = appointmentId;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public Appointment(long id, long appointmentId, @NotNull(message = "this field is manditory") String firstName,
 			@NotNull(message = "this field is manditory") String lastName,
 			@NotNull(message = "this field is manditory") String doctorName,
-			@NotNull(message = "this field is manditory") String deceased,
-			@NotNull(message = "this field is manditory") Date date,
-			@NotNull(message = "this field is manditory") Time time, Patient patient, Doctor doctor) {
+			@NotNull(message = "this field is manditory") String deceased, Date date, Time time, Patient patient,
+			Doctor doctor) {
 		super();
 		this.id = id;
+		this.appointmentId = appointmentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.doctorName = doctorName;
@@ -153,11 +163,12 @@ public class Appointment implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
+
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", doctorName="
-				+ doctorName + ", deceased=" + deceased + ", date=" + date + ", time=" + time + ", patient=" + patient
-				+ ", doctor=" + doctor + "]";
+		return "Appointment [id=" + id + ", appointmentId=" + appointmentId + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", doctorName=" + doctorName + ", deceased=" + deceased + ", date=" + date + ", time="
+				+ time + ", patient=" + patient + ", doctor=" + doctor + "]";
 	}
 
 	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,

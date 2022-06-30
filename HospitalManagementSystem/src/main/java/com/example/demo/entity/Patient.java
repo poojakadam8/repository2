@@ -40,7 +40,6 @@ public class Patient implements Serializable
 	@NotNull(message="this field is manditory")
 	private String lastName;
 	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
 	private int age;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
@@ -52,7 +51,6 @@ public class Patient implements Serializable
 	@NotNull(message="this field is manditory")
 	private String contactno;
 	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
 	private Date date;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
