@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,8 +29,9 @@ public class Patient implements Serializable
  {
 
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue = 1)
+	
 	private long patientId;
 	@Column(nullable=false)
 	@NotNull
@@ -51,7 +55,7 @@ public class Patient implements Serializable
 	@NotNull(message="this field is manditory")
 	private String contactno;
 	@Column(nullable=false)
-	private Date date;
+	private LocalDate date;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
 	private String userName;
@@ -60,6 +64,7 @@ public class Patient implements Serializable
 	private String password;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="doctorId")
 	@JsonIgnoreProperties({"patient","userName","password"})
 	private Doctor doctor;
 	
@@ -67,6 +72,10 @@ public class Patient implements Serializable
    @JsonIgnoreProperties("doctor")
     private Appointment appointment;
 
+   @PrePersist
+	public void adddate() {
+		this.date=LocalDate.now();
+	}
 public long getPatientId() {
 	return patientId;
 }
@@ -131,14 +140,26 @@ public void setContactno(String contactno) {
 	this.contactno = contactno;
 }
 
-public Date getDate() {
+
+
+public Doctor getDoctor() {
+	return doctor;
+}
+public void setDoctor(Doctor doctor) {
+	this.doctor = doctor;
+}
+public Appointment getAppointment() {
+	return appointment;
+}
+public void setAppointment(Appointment appointment) {
+	this.appointment = appointment;
+}
+public LocalDate getDate() {
 	return date;
 }
-
-public void setDate(Date date) {
+public void setDate(LocalDate date) {
 	this.date = date;
 }
-
 public String getUserName() {
 	return userName;
 }
@@ -155,25 +176,20 @@ public void setPassword(String password) {
 	this.password = password;
 }
 
-public Doctor getDoctor() {
-	return doctor;
-}
 
-public void setDoctor(Doctor doctor) {
-	this.doctor = doctor;
-}
 
-public Appointment getAppointment() {
-	return appointment;
-}
 
-public void setAppointment(Appointment appointment) {
-	this.appointment = appointment;
-}
 
-public Patient(long patientId, String firstName, String middleName, String lastName, int age, String gender,
-		String address, String contactno, Date date, String userName, String password, Doctor doctor,
-		Appointment appointment) {
+
+
+public Patient(long patientId, @NotNull @NotBlank(message = "this field is manditory") String firstName,
+		@NotNull(message = "this field is manditory") String middleName,
+		@NotNull(message = "this field is manditory") String lastName, int age,
+		@NotNull(message = "this field is manditory") String gender,
+		@NotNull(message = "this field is manditory") String address,
+		@NotNull(message = "this field is manditory") String contactno, LocalDate date,
+		@NotNull(message = "this field is manditory") String userName,
+		@NotNull(message = "this field is manditory") String password, Doctor doctor, Appointment appointment) {
 	super();
 	this.patientId = patientId;
 	this.firstName = firstName;
@@ -189,9 +205,6 @@ public Patient(long patientId, String firstName, String middleName, String lastN
 	this.doctor = doctor;
 	this.appointment = appointment;
 }
-
-
-
 public Patient(long patientId, @NotNull @NotBlank(message = "this field is manditory") String firstName,
 		@NotNull(message = "this field is manditory") String middleName,
 		@NotNull(message = "this field is manditory") String lastName) {
@@ -202,10 +215,7 @@ public Patient(long patientId, @NotNull @NotBlank(message = "this field is mandi
 	this.lastName = lastName;
 }
 
-public Patient() {
-	super();
-	// TODO Auto-generated constructor stub
-}
+
 
 @Override
 public String toString() {
@@ -214,6 +224,12 @@ public String toString() {
 			+ ", date=" + date + ", userName=" + userName + ", password=" + password + ", doctor=" + doctor
 			+ ", appointment=" + appointment + "]";
 }
+public Patient() {
+	super();
+	// TODO Auto-generated constructor stub
+}
+
+
 
 
 

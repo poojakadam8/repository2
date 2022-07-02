@@ -44,7 +44,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	 app.setLastName(appointment.getLastName());
 	 app.setDeceased(appointment.getDeceased());
 	 app.setDoctorName(appointment.getDoctorName());
-	 app.setTime(appointment.getTime());
 	 app.setDate(appointment.getDate());
 	
 	 appointmentRepository.save(app);

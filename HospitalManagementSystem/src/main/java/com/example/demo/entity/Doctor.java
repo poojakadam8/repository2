@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,10 +28,10 @@ public class Doctor implements Serializable
  {
 
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue = 101)
+
 	private long doctorId;
-	
 	@Column(nullable=false)
 	@NotNull
 	@NotBlank(message ="first name is manditory")
@@ -49,7 +51,7 @@ public class Doctor implements Serializable
 	@NotBlank(message="last name is manditory")
 	private String age;
 	@Column(nullable=false)
-	private Date joiningDate;
+	private LocalDate joiningDate;
 	@Column(nullable=false)
 	@NotBlank(message="last name is manditory")
 	private String qualification;
@@ -70,7 +72,13 @@ public class Doctor implements Serializable
 	@OneToMany(mappedBy="doctor",cascade=CascadeType.PERSIST)
 	@JsonIgnoreProperties("doctor")
 	private List<Appointment> appointment;
+	
+	@PrePersist
+	public void addDate() {
+		this.joiningDate = LocalDate.now();
+	}
 
+	
 	public long getDoctorId() {
 		return doctorId;
 	}
@@ -145,11 +153,12 @@ public class Doctor implements Serializable
 
 
 
-	public Date getJoiningDate() {
+	
+	public LocalDate getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(Date joiningDate) {
+	public void setJoiningDate(LocalDate joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
@@ -169,17 +178,23 @@ public class Doctor implements Serializable
 		this.password = password;
 	}
 
+	
+
+
 	public List<Patient> getPatient() {
 		return patient;
 	}
+
 
 	public void setPatient(List<Patient> patient) {
 		this.patient = patient;
 	}
 
+
 	public List<Appointment> getAppointment() {
 		return appointment;
 	}
+
 
 	public void setAppointment(List<Appointment> appointment) {
 		this.appointment = appointment;
@@ -193,9 +208,21 @@ public class Doctor implements Serializable
 
 
 
+
+	
+	
+
+
+
 	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,
-			String lastName, String address, long contactNo, String gender, String age, Date joiningDate,
-			String qualification, String yearOfExperience, String userName, String password, List<Patient> patient,
+			@NotBlank(message = "last name is manditory") String lastName,
+			@NotBlank(message = "last name is manditory") String address, long contactNo,
+			@NotBlank(message = "last name is manditory") String gender,
+			@NotBlank(message = "last name is manditory") String age, LocalDate joiningDate,
+			@NotBlank(message = "last name is manditory") String qualification,
+			@NotBlank(message = "last name is manditory") String yearOfExperience,
+			@NotBlank(message = "last name is manditory") String userName,
+			@NotBlank(message = "last name is manditory") String password, List<Patient> patient,
 			List<Appointment> appointment) {
 		super();
 		this.doctorId = doctorId;
@@ -214,13 +241,18 @@ public class Doctor implements Serializable
 		this.appointment = appointment;
 	}
 
+
+	
+
 	@Override
 	public String toString() {
 		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + ", address="
-				+ address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", qualification="
-				+ qualification + ", yearOfExperience=" + yearOfExperience + ", userName=" + userName + ", password="
-				+ password + ", patient=" + patient + ", appointment=" + appointment + "]";
+				+ address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", joiningDate="
+				+ joiningDate + ", qualification=" + qualification + ", yearOfExperience=" + yearOfExperience
+				+ ", userName=" + userName + ", password=" + password + ", patient=" + patient + ", appointment="
+				+ appointment + "]";
 	}
+
 
 	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,
 			@NotBlank(message = "last name is manditory") String lastName) {

@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
@@ -27,11 +30,10 @@ public class Appointment implements Serializable
 {
 
 	@Id
-	@GeneratedValue(generator="seq", strategy=GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue=101)
+	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name= "seq", initialValue = 1001)
+	
 	private long id;
-	@Column(nullable=false)
-	private long appointmentId;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
 	private String firstName;
@@ -45,18 +47,37 @@ public class Appointment implements Serializable
 	@NotNull(message="this field is manditory")
 	private String deceased;
 	@Column(nullable=false)
-	private Date date;
-	@Column(nullable=false)
-	private Time time;
+	private LocalDate date;
+
 	
 	@OneToOne(mappedBy="appointment",cascade=CascadeType.PERSIST)
-	@JoinColumn(name="patientId")
 	@JsonIgnoreProperties({"appointment","userName","password"})
 	private Patient patient;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonIgnoreProperties("appointment")
 	private Doctor doctor;
+	
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	@PrePersist
+	public void adddate() {
+		this.date=LocalDate.now();
+	}
 
 	public long getId() {
 		return id;
@@ -94,66 +115,40 @@ public class Appointment implements Serializable
 		this.deceased = deceased;
 	}
 
-	public Date getDate() {
+	
+
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public Time getTime() {
-		return time;
-	}
 
-	public void setTime(Time time) {
-		this.time = time;
-	}
 
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
 	
-
-	public long getAppointmentId() {
-		return appointmentId;
-	}
-
-	public void setAppointmentId(long appointmentId) {
-		this.appointmentId = appointmentId;
-	}
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
 
-	public Appointment(long id, long appointmentId, @NotNull(message = "this field is manditory") String firstName,
+	
+
+	
+	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,
 			@NotNull(message = "this field is manditory") String lastName,
 			@NotNull(message = "this field is manditory") String doctorName,
-			@NotNull(message = "this field is manditory") String deceased, Date date, Time time, Patient patient,
+			@NotNull(message = "this field is manditory") String deceased, LocalDate date, Patient patient,
 			Doctor doctor) {
 		super();
 		this.id = id;
-		this.appointmentId = appointmentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.doctorName = doctorName;
 		this.deceased = deceased;
 		this.date = date;
-		this.time = time;
 		this.patient = patient;
 		this.doctor = doctor;
 	}
@@ -164,11 +159,14 @@ public class Appointment implements Serializable
 	}
 
 
+	
+	
+
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", appointmentId=" + appointmentId + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", doctorName=" + doctorName + ", deceased=" + deceased + ", date=" + date + ", time="
-				+ time + ", patient=" + patient + ", doctor=" + doctor + "]";
+		return "Appointment [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", doctorName="
+				+ doctorName + ", deceased=" + deceased + ", date=" + date + ", patient=" + patient + ", doctor="
+				+ doctor + "]";
 	}
 
 	public Appointment(long id, @NotNull(message = "this field is manditory") String firstName,
