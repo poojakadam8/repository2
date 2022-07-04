@@ -50,12 +50,12 @@ public class Appointment implements Serializable
 	private LocalDate date;
 
 	
-	@OneToOne(mappedBy="appointment",cascade=CascadeType.PERSIST)
+	@OneToOne(mappedBy="appointment",cascade=CascadeType.ALL)
 	@JsonIgnoreProperties({"appointment","userName","password"})
 	private Patient patient;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonIgnoreProperties("appointment")
+	@JsonIgnoreProperties({"appointment","userName","password"})
 	private Doctor doctor;
 	
 	public Patient getPatient() {

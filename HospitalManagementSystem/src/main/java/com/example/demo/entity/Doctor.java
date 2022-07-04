@@ -31,7 +31,7 @@ public class Doctor implements Serializable
 	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name= "seq", initialValue = 101)
 
-	private long doctorId;
+	private long id;
 	@Column(nullable=false)
 	@NotNull
 	@NotBlank(message ="first name is manditory")
@@ -65,11 +65,11 @@ public class Doctor implements Serializable
 	@NotBlank(message="last name is manditory")
 	private String password;
 	
-	@OneToMany(mappedBy="doctor", cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="doctor", cascade=CascadeType.ALL)
 	@JsonIgnoreProperties({"doctor","userName","password"})
 	private List<Patient> patient;
 	
-	@OneToMany(mappedBy="doctor",cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy="doctor",cascade=CascadeType.ALL)
 	@JsonIgnoreProperties("doctor")
 	private List<Appointment> appointment;
 	
@@ -79,13 +79,21 @@ public class Doctor implements Serializable
 	}
 
 	
-	public long getDoctorId() {
-		return doctorId;
+	
+
+	public long getId() {
+		return id;
 	}
 
-	public void setDoctorId(long doctorId) {
-		this.doctorId = doctorId;
+
+
+
+	public void setId(long id) {
+		this.id = id;
 	}
+
+
+
 
 	public String getFirstName() {
 		return firstName;
@@ -214,7 +222,11 @@ public class Doctor implements Serializable
 
 
 
-	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,
+	
+
+	
+
+	public Doctor(long id, @NotNull @NotBlank(message = "first name is manditory") String firstName,
 			@NotBlank(message = "last name is manditory") String lastName,
 			@NotBlank(message = "last name is manditory") String address, long contactNo,
 			@NotBlank(message = "last name is manditory") String gender,
@@ -225,7 +237,7 @@ public class Doctor implements Serializable
 			@NotBlank(message = "last name is manditory") String password, List<Patient> patient,
 			List<Appointment> appointment) {
 		super();
-		this.doctorId = doctorId;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -242,22 +254,26 @@ public class Doctor implements Serializable
 	}
 
 
+
+
 	
+
 
 	@Override
 	public String toString() {
-		return "Doctor [doctorId=" + doctorId + ", firstName=" + firstName + ", lastName=" + lastName + ", address="
-				+ address + ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", joiningDate="
-				+ joiningDate + ", qualification=" + qualification + ", yearOfExperience=" + yearOfExperience
-				+ ", userName=" + userName + ", password=" + password + ", patient=" + patient + ", appointment="
-				+ appointment + "]";
+		return "Doctor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
+				+ ", contactNo=" + contactNo + ", gender=" + gender + ", age=" + age + ", joiningDate=" + joiningDate
+				+ ", qualification=" + qualification + ", yearOfExperience=" + yearOfExperience + ", userName="
+				+ userName + ", password=" + password + ", patient=" + patient + ", appointment=" + appointment + "]";
 	}
 
 
-	public Doctor(long doctorId, @NotNull @NotBlank(message = "first name is manditory") String firstName,
+
+
+	public Doctor(long id, @NotNull @NotBlank(message = "first name is manditory") String firstName,
 			@NotBlank(message = "last name is manditory") String lastName) {
 		super();
-		this.doctorId = doctorId;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}

@@ -32,14 +32,11 @@ public class Patient implements Serializable
 	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
 	@SequenceGenerator(name= "seq", initialValue = 1)
 	
-	private long patientId;
+	private long id;
 	@Column(nullable=false)
 	@NotNull
 	@NotBlank(message="this field is manditory")
 	private String firstName;
-	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
-	private String middleName;
 	@Column(nullable=false)
 	@NotNull(message="this field is manditory")
 	private String lastName;
@@ -76,13 +73,17 @@ public class Patient implements Serializable
 	public void adddate() {
 		this.date=LocalDate.now();
 	}
-public long getPatientId() {
-	return patientId;
+
+
+public long getId() {
+	return id;
 }
 
-public void setPatientId(long patientId) {
-	this.patientId = patientId;
+
+public void setId(long id) {
+	this.id = id;
 }
+
 
 public String getFirstName() {
 	return firstName;
@@ -92,13 +93,7 @@ public void setFirstName(String firstName) {
 	this.firstName = firstName;
 }
 
-public String getMiddleName() {
-	return middleName;
-}
 
-public void setMiddleName(String middleName) {
-	this.middleName = middleName;
-}
 
 public String getLastName() {
 	return lastName;
@@ -182,8 +177,7 @@ public void setPassword(String password) {
 
 
 
-public Patient(long patientId, @NotNull @NotBlank(message = "this field is manditory") String firstName,
-		@NotNull(message = "this field is manditory") String middleName,
+public Patient(long id, @NotNull @NotBlank(message = "this field is manditory") String firstName,
 		@NotNull(message = "this field is manditory") String lastName, int age,
 		@NotNull(message = "this field is manditory") String gender,
 		@NotNull(message = "this field is manditory") String address,
@@ -191,9 +185,8 @@ public Patient(long patientId, @NotNull @NotBlank(message = "this field is mandi
 		@NotNull(message = "this field is manditory") String userName,
 		@NotNull(message = "this field is manditory") String password, Doctor doctor, Appointment appointment) {
 	super();
-	this.patientId = patientId;
+	this.id = id;
 	this.firstName = firstName;
-	this.middleName = middleName;
 	this.lastName = lastName;
 	this.age = age;
 	this.gender = gender;
@@ -205,25 +198,25 @@ public Patient(long patientId, @NotNull @NotBlank(message = "this field is mandi
 	this.doctor = doctor;
 	this.appointment = appointment;
 }
-public Patient(long patientId, @NotNull @NotBlank(message = "this field is manditory") String firstName,
-		@NotNull(message = "this field is manditory") String middleName,
+public Patient(long id, @NotNull @NotBlank(message = "this field is manditory") String firstName,
 		@NotNull(message = "this field is manditory") String lastName) {
 	super();
-	this.patientId = patientId;
+	this.id = id;
 	this.firstName = firstName;
-	this.middleName = middleName;
 	this.lastName = lastName;
 }
 
 
 
+
 @Override
 public String toString() {
-	return "Patient [patientId=" + patientId + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-			+ lastName + ", age=" + age + ", gender=" + gender + ", address=" + address + ", contactno=" + contactno
-			+ ", date=" + date + ", userName=" + userName + ", password=" + password + ", doctor=" + doctor
-			+ ", appointment=" + appointment + "]";
+	return "Patient [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", gender="
+			+ gender + ", address=" + address + ", contactno=" + contactno + ", date=" + date + ", userName=" + userName
+			+ ", password=" + password + ", doctor=" + doctor + ", appointment=" + appointment + "]";
 }
+
+
 public Patient() {
 	super();
 	// TODO Auto-generated constructor stub

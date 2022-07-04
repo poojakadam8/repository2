@@ -39,10 +39,10 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public Doctor getDoctorById(long doctorId) {
+	public Doctor getDoctorById(long id) {
 		// TODO Auto-generated method stub
 		
-		Optional<Doctor> doctor= doctorRepository.findById(doctorId);
+		Optional<Doctor> doctor= doctorRepository.findById(id);
 		
 		if(doctor.isPresent())
 			return doctor.get();
@@ -51,9 +51,9 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public Doctor updateDoctor(long doctorId, Doctor doctor) {
+	public Doctor updateDoctor(long id, Doctor doctor) {
 		// TODO Auto-generated method 
-		Doctor dr =doctorRepository.findById(doctorId).orElseThrow(()-> new GivenIdNotFoundException());
+		Doctor dr =doctorRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 		
 		dr.setFirstName(doctor.getFirstName());
 		dr.setLastName(doctor.getLastName());
@@ -70,10 +70,10 @@ public class DoctorServiceImpl implements DoctorService{
 	}
 
 	@Override
-	public String deleteDoctor(long doctorId) {
+	public String deleteDoctor(long id) {
 		// TODO Auto-generated method stub
-	Doctor doctor=doctorRepository.findById(doctorId).orElseThrow(()-> new GivenIdNotFoundException());
-	doctorRepository.deleteById(doctorId);;	
+	Doctor doctor=doctorRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
+	doctorRepository.deleteById(id);;	
 	return "Doctor Record Deleted Successfully";
 	}
 

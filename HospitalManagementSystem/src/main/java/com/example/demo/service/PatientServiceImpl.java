@@ -37,29 +37,28 @@ public class PatientServiceImpl implements PatientService {
 
 
 	@Override
-	public Patient getPatientById(long patientId) {
+	public Patient getPatientById(long id) {
 		// TODO Auto-generated method stub
-Patient patient=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
+Patient patient=patientRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
 		
 		return patient;
 		
 	}
 
 	@Override
-	public String deletePatient(long patientId) {
+	public String deletePatient(long id) {
 		// TODO Auto-generated method stub
-		Patient patient=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
-		patientRepository.deleteById(patientId);
+		Patient patient = patientRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
+		patientRepository.deleteById(id);
 		return "Patient record deleted successfully..";
 	}
 
 	@Override
-	public Patient updatePatient(long patientId, Patient patient) {
+	public Patient updatePatient(long id, Patient patient) {
 		// TODO Auto-generated method stub
 		
-		Patient patient1=patientRepository.findById(patientId).orElseThrow(()-> new GivenIdNotFoundException());
+		Patient patient1=patientRepository.findById(id).orElseThrow(()-> new GivenIdNotFoundException());
          patient1.setFirstName(patient.getFirstName());
-         patient1.setMiddleName(patient.getMiddleName());
          patient1.setLastName(patient.getLastName());
          patient1.setAge(patient.getAge());
          patient1.setGender(patient.getGender());

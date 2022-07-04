@@ -26,14 +26,14 @@ public class DoctorRepositoryTest {
 	@Test
 	public void saveDoctorTest() {
 		Doctor doctor=doctorRepository.save(new Doctor(5,"Avinash","Pawar"));
-		Assertions.assertThat(doctor.getDoctorId()).isGreaterThan(0);
+		Assertions.assertThat(doctor.getId()).isGreaterThan(0);
 	}
 	
 	@Test 
 	public void getDoctorTest() {
 		
 		Doctor doctor=doctorRepository.findById(2L).get();
-		Assertions.assertThat(doctor.getDoctorId()).isEqualTo(2L);
+		Assertions.assertThat(doctor.getId()).isEqualTo(2L);
 	}
 	
 	@Test

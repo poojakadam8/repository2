@@ -37,21 +37,21 @@ public class PatientController {
 		return patientService.getPatientList();
 	}
 	
-	@GetMapping("/{patientId}")
-	public Patient getPatientById(@PathVariable("patientIdd")long patientId) {
-		return patientService.getPatientById(patientId);
+	@GetMapping("/{id}")
+	public Patient getPatientById(@PathVariable("id")long id) {
+		return patientService.getPatientById(id);
 		
 	}
 	
-	@PutMapping("/{patientId}")
-	public Patient updatePatient(@Valid @PathVariable("patientId") long patientId, @RequestBody Patient patient) {
+	@PutMapping("/{id}")
+	public Patient updatePatient(@Valid @PathVariable("id") long id, @RequestBody Patient patient) {
 	
-		return patientService.updatePatient(patientId,patient);
+		return patientService.updatePatient(id,patient);
 	}
 	
-	@DeleteMapping("/{patientId}")
-	public String deletePatient(@PathVariable("patientId") long patientId) {
-		return patientService.deletePatient(patientId);
+	@DeleteMapping("/{id}")
+	public String deletePatient(@PathVariable("id") long id) {
+		return patientService.deletePatient(id);
 		
 	}
 	
