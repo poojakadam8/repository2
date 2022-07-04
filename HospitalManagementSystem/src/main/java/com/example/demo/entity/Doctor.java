@@ -16,8 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,8 +27,8 @@ public class Doctor implements Serializable
  {
 
 	@Id
-	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue = 101)
+	@GeneratedValue(generator="sequ", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name= "sequ", initialValue = 101)
 
 	private long id;
 	@Column(nullable=false)
@@ -62,7 +61,7 @@ public class Doctor implements Serializable
 	@NotBlank(message="last name is manditory")
 	private String userName;
 	@Column(nullable=false)
-	@NotBlank(message="last name is manditory")
+	@Size(min=4,max=8)
 	private String password;
 	
 	@OneToMany(mappedBy="doctor", cascade=CascadeType.ALL)

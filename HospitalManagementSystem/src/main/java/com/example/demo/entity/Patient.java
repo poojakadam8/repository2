@@ -19,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -57,7 +58,7 @@ public class Patient implements Serializable
 	@NotNull(message="this field is manditory")
 	private String userName;
 	@Column(nullable=false)
-	@NotNull(message="this field is manditory")
+	@Size(min=4,max=8)
 	private String password;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -67,6 +68,7 @@ public class Patient implements Serializable
 	
    @OneToOne(fetch = FetchType.LAZY)
    @JsonIgnoreProperties("doctor")
+   @JoinColumn(name="appointmentId")
     private Appointment appointment;
 
    @PrePersist

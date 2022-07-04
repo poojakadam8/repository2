@@ -72,19 +72,6 @@ Patient patient=patientRepository.findById(id).orElseThrow(()-> new GivenIdNotFo
 		return patient1;
 	}
 
-	@Override
-	public Patient getPatientByFirstName(String firstName) {
-		// TODO Auto-generated method stub
-		Optional<Patient> patient=patientRepository.findByFirstName(firstName);
-		if(patient.isPresent())
-		{
-			return patient.get();
-			
-		}
-		else {
-			throw new NoSuchDataFoundException();
-		}
-	}
 
 	@Override
 	public Patient getPatientByLastName(String lastName) {
@@ -114,6 +101,30 @@ Patient patient=patientRepository.findById(id).orElseThrow(()-> new GivenIdNotFo
 			throw new NoSuchDataFoundException();
 		}
 	}
+
+	@Override
+	public List<Patient> getPatientByFirstName(String firstName) {
+		// TODO Auto-generated method stub
+		List<Patient> patient=patientRepository.findByFirstName(firstName);
+		if(patient.isEmpty()) {
+			throw new NoSuchDataFoundException();
+		}
+		else {
+			return patient;
+		}
+	}
+
+	@Override
+	public List<Patient> getByAgeGreaterThan(String age) {
+		// TODO Auto-generated method stub
+		return patientRepository.getByAgeGreaterThan(age);
+	}
+
+	/**@Override
+	public List<Patient> getByFullName(String firstName, String lastName) {
+		// TODO Auto-generated method stub
+		return patientRepository.getByFullName(firstName,lastName);
+	}**/
 
 
 }

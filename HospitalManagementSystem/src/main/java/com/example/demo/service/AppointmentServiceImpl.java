@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.entity.Doctor;
 import com.example.demo.exception.GivenIdNotFoundException;
 import com.example.demo.exception.NoRecordFoundException;
 import com.example.demo.exception.ResourceNotFoundException;
@@ -69,6 +70,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 		return app.get();
 		else
 			throw new GivenIdNotFoundException();
+	}
+
+	@Override
+	public List<Appointment> findByDoctor(Doctor doctor) {
+		// TODO Auto-generated method stub
+		return appointmentRepository.findByDoctor(doctor);
 	}
 
 	

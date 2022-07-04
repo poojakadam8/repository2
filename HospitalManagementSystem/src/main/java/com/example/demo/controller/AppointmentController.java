@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.entity.Doctor;
 import com.example.demo.service.AppointmentService;
 
 @RestController
@@ -52,6 +53,11 @@ public class AppointmentController {
 	@DeleteMapping("/{id}")
 	public String deleteAppointment(@PathVariable("id")long id) {
 		return appointmentService.deleteAppointment(id);
+		
+	}
+	@GetMapping("/bydoctor/{doctor}")
+	public List<Appointment> findFyDoctor(@PathVariable("doctor") Doctor doctor){
+		return appointmentService.findByDoctor(doctor);
 		
 	}
 }

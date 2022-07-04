@@ -56,8 +56,9 @@ public class PatientController {
 	}
 	
 	@GetMapping("/byfname/{firstName}")
-	public Patient getPatientByFirstName(@PathVariable("firstName") String firstName){
+	public List<Patient> getPatientByFirstName(@PathVariable("firstName") String firstName){
 		return patientService.getPatientByFirstName(firstName);
+		
 		
 	}
 	
@@ -69,6 +70,20 @@ public class PatientController {
 	@GetMapping("/bygender/{gender}")
 	public Patient getPatientByGender(@PathVariable("gender") String gender){
 		return patientService.getPatientByGender(gender);
+		
+	}
+	
+	/**@GetMapping("/getbyfullname/{firstName}/{lastName}")
+	public List<Patient> getByFullName(@PathVariable("firstName") String firstName,@PathVariable("lastName") String lastName)
+	{
+		return patientService.getByFullName(firstName,lastName);
+		
+	}**/
+	
+	@GetMapping("/getbyage/{age}")
+	public List<Patient> getByageGreaterThan(@PathVariable("age") String age)
+	{
+		return patientService.getByAgeGreaterThan(age);
 		
 	}
 	

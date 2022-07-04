@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.entity.Doctor;
 import com.example.demo.service.DoctorService;
 
@@ -55,10 +54,9 @@ public class DoctorController {
 		return doctorService.deleteDoctor(id);
 	}
 	
-	@GetMapping("/byfname/{firstName}")
-	public Doctor getDoctorByFirstName(@PathVariable("firstName") String firstName){
+	@GetMapping("/GetByFirstName/{firstName}")
+	public List<Doctor> getDoctorByFirstName(@PathVariable("firstName") String firstName){
 		return doctorService.getDoctorByFirstName(firstName);
-		
 	}
 	
 	@GetMapping("/bylname/{lastName}")

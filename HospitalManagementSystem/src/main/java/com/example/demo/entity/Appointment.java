@@ -30,8 +30,8 @@ public class Appointment implements Serializable
 {
 
 	@Id
-	@GeneratedValue(generator="seq", strategy = GenerationType.AUTO)
-	@SequenceGenerator(name= "seq", initialValue = 1001)
+	@GeneratedValue(generator="seque", strategy = GenerationType.AUTO)
+	@SequenceGenerator(name= "seque", initialValue = 1001)
 	
 	private long id;
 	@Column(nullable=false)

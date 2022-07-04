@@ -5,6 +5,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.entity.Doctor;
 
 public interface AppointmentService {
 
@@ -17,6 +18,8 @@ public interface AppointmentService {
 	String deleteAppointment(long id);
 
 	Appointment getAppointmentById(long id);
+
+	List<Appointment> findByDoctor(Doctor doctor);
 
 	
 

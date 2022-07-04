@@ -16,11 +16,16 @@ public interface PatientService {
 
 	String deletePatient(long id);
 
-	Patient getPatientByFirstName(String firstName);
-
 	Patient getPatientByLastName(String lastName);
 
 	Patient getPatientByGender(String gender);
+
+	List<Patient> getPatientByFirstName(String firstName);
+
+	List<Patient> getByAgeGreaterThan(String age);
+
+	//List<Patient> getByFullName(String firstName, String lastName);
+
 
 
 

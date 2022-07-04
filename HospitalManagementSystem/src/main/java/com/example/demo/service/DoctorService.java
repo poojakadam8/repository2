@@ -11,9 +11,9 @@ public interface DoctorService {
 	Doctor getDoctorById(long id);
 	Doctor updateDoctor(long id, Doctor doctor);
 	String deleteDoctor(long id);
-	Doctor getDoctorByFirstName(String firstName);
 	List<Doctor> getDoctorByLastName(String lastName);
 	List<Doctor> getDoctorByQualification(String qualification);
 	List<Doctor> getDoctorByGender(String gender);
+	List<Doctor> getDoctorByFirstName(String firstName);
 
 }

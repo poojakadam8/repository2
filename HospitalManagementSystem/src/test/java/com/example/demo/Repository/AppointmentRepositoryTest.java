@@ -22,14 +22,14 @@ public class AppointmentRepositoryTest {
 	
 	@Test
 	public void saveAppointmentTest() {
-		Appointment app=appointmentRepository.save(new Appointment(1,"pooja","kadam","fever"));
+		Appointment app=appointmentRepository.save(new Appointment(1053,"divya","patil","fever"));
 		Assertions.assertThat(app.getId()).isGreaterThan(0);
 	}
 	
 	@Test
 	public void getAppointmentTest() {
-		Appointment app=appointmentRepository.findById(2L).get();
-		Assertions.assertThat(app.getId()).isEqualTo(2L);
+		Appointment app=appointmentRepository.findById(1053L).get();
+		Assertions.assertThat(app.getId()).isEqualTo(1053L);
 		
 	}
 	@Test
@@ -40,7 +40,7 @@ public class AppointmentRepositoryTest {
 	
 	@Test
 	public void updateAppointmentTest() {
-		Appointment app=appointmentRepository.findById(2L).get();
+		Appointment app=appointmentRepository.findById(1053L).get();
 		app.setDeceased("");
 		Appointment updated=appointmentRepository.save(app);
 		Assertions.assertThat(updated.getDeceased()).isEqualTo("");

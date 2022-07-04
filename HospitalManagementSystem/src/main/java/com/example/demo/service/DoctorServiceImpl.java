@@ -77,18 +77,7 @@ public class DoctorServiceImpl implements DoctorService{
 	return "Doctor Record Deleted Successfully";
 	}
 
-	@Override
-	public Doctor getDoctorByFirstName(String firstName) {
-		// TODO Auto-generated method stub
-		Optional <Doctor> doctor=doctorRepository.findByFirstName(firstName);
-
-		if(doctor.isPresent())
-		{
-			return doctor.get();
-		}
-		else
-			throw new NoSuchDataFoundException();
-	}
+	
 
 	@Override
 	public List<Doctor> getDoctorByLastName(String lastName) {
@@ -125,6 +114,18 @@ public class DoctorServiceImpl implements DoctorService{
 		}
 		else {
 		return doctor;
+		}
+	}
+
+	@Override
+	public List<Doctor> getDoctorByFirstName(String firstName) {
+		// TODO Auto-generated method stub
+		List<Doctor> doctor=doctorRepository.findByFirstName(firstName);
+		if(doctor.isEmpty()) {
+			throw new NoSuchDataFoundException();
+		}
+		else {
+			return doctor;
 		}
 	}
 

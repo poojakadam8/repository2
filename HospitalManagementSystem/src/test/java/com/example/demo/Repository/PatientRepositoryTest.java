@@ -24,13 +24,13 @@ public class PatientRepositoryTest {
 	
 	@Test
 	public void savePatientTest() {
-		Patient patient=patientRepository.save(new Patient(3,"Poonam","kadam"));
+		Patient patient=patientRepository.save(new Patient(3,"divya","patil"));
 		Assertions.assertThat(patient.getId()).isGreaterThan(0);
 	}
 	@Test
 	public void getPatientTest() {
-		Patient patient=patientRepository.findById(2L).get();
-		Assertions.assertThat(patient.getId()).isEqualTo(2L);
+		Patient patient=patientRepository.findById(952L).get();
+		Assertions.assertThat(patient.getId()).isEqualTo(952L);
 	}
 	@Test
 	public void getPatientListTest() {
@@ -40,7 +40,7 @@ public class PatientRepositoryTest {
 	
 	@Test
 	public void updatePatientTest() {
-		Patient patient=patientRepository.findById(2L).get();
+		Patient patient=patientRepository.findById(952L).get();
 		patient.setFirstName("");
 		Patient updated=patientRepository.save(patient);
 		Assertions.assertThat(updated.getFirstName()).isEqualTo("");
